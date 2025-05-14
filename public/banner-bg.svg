@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" version="1.1" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+ <rect width="1920" height="1080" fill="#0c4a6e"/>
+ <g fill="none" stroke="#0ea5e9" stroke-width="2">
+  <path d="m0 180h1920"/>
+  <path d="m0 540h1920"/>
+  <path d="m0 900h1920"/>
+  <path d="m480 0v1080"/>
+  <path d="m960 0v1080"/>
+  <path d="m1440 0v1080"/>
+  <!-- Circuit connections -->
+  <path d="m480 180h100v180h-100"/>
+  <path d="m960 540h100v180h-100"/>
+  <path d="m1440 900h100v-180h-100"/>
+ </g>
+</svg> 
