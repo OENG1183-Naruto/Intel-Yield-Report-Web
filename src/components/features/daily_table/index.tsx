@@ -1,3 +1,5 @@
+"use client"
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -6,7 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface TableData {
   priority: string;
@@ -24,7 +27,7 @@ interface TableData {
 }
 
 const HvmImtTable = () => {
-  const tableData: TableData[] = [
+  const [tableData, setTableData] = useState<TableData[]>([
     {
       priority: "1. OKR",
       platform: "CPU",
@@ -37,7 +40,7 @@ const HvmImtTable = () => {
       mtdPeer: 92,
       qtdA90: 95,
       qtdPeer: 92,
-      comment: "Manual key in",
+      comment: "",
     },
     {
       priority: "1. OKR",
@@ -51,7 +54,7 @@ const HvmImtTable = () => {
       mtdPeer: 92,
       qtdA90: 90,
       qtdPeer: 92,
-      comment: "Manual key in",
+      comment: "",
     },
     {
       priority: "2. IMTFocus",
@@ -65,7 +68,7 @@ const HvmImtTable = () => {
       mtdPeer: 92,
       qtdA90: 85,
       qtdPeer: 92,
-      comment: "Manual key in",
+      comment: "",
     },
     {
       priority: "2. IMTFocus",
@@ -95,7 +98,7 @@ const HvmImtTable = () => {
       qtdPeer: null,
       comment: "",
     },
-  ];
+  ]);
 
   const getWtdMark = (data: TableData) => {
     if (data.goal === null || data.wtdA90 === null || data.wtdPeer === null) {
@@ -137,9 +140,9 @@ const HvmImtTable = () => {
     if (value === null || goal === null) return "";
     return value >= goal ? "text-green-600" : "text-red-600";
   };
-
+  const [inputValue, setInputValue] = useState("");
   return (
-    <div className="p-4">
+    <div className="container mx-auto p-9">
       <h1 className="text-xl font-bold mb-4">HVM IMT</h1>
       <div className="rounded-md border">
         <Table>
@@ -237,7 +240,20 @@ const HvmImtTable = () => {
                   >
                     {wtdMark.text || "-"}
                   </TableCell>
-                  <TableCell>{row.comment || "-"}</TableCell>
+                  {/* <TableCell>{row.comment || "-"}</TableCell> */}
+                  <TableCell className="border-r">
+                    <input
+                      type="text"
+                      className="border-none bg-transparent focus:outline-none w-full"
+                      value={row.comment}
+                      placeholder="Manual key in"
+                      onChange={(e) => {
+                        const updatedTableData = [...tableData];
+                        updatedTableData[index].comment = e.target.value;
+                        setTableData(updatedTableData);
+                      }}
+                    />
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -245,6 +261,18 @@ const HvmImtTable = () => {
         </Table>
       </div>
       <div className="mt-5 text-sm space-y-1">
+        <p>
+          <span className="inline-block w-4 h-4 bg-green-600 mr-2"></span>
+          Healthy: Meet goal + benchmark
+        </p>
+        <p>
+          <span className="inline-block w-4 h-4 bg-red-600 mr-2"></span>
+          Missing: Not meet goal
+        </p>
+        <p>
+          <span className="inline-block w-4 h-4 bg-yellow-600 mr-2"></span>
+          Not benchmark: Meet goal but Yield worst than peer &gt;20% Yield goal
+        </p>
         <p>
           <span className="inline-block w-4 h-4 bg-green-600 mr-2"></span>
           Healthy: Meet goal + benchmark

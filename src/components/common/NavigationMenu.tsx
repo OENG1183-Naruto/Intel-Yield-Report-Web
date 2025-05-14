@@ -12,6 +12,7 @@ import {
   DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 const hvmOptions = [
   {
@@ -33,10 +34,10 @@ const sites = [
     name: "VNAT A90",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
+        hasSubMenu: true
       }
     ]
   },
@@ -44,10 +45,10 @@ const sites = [
     name: "PGAT A01",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
+        hasSubMenu: true
       }
     ]
   },
@@ -55,10 +56,10 @@ const sites = [
     name: "KuAT A15",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
+        hasSubMenu: true
       }
     ]
   },
@@ -66,10 +67,10 @@ const sites = [
     name: "CRAT A06",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
+        hasSubMenu: true
       }
     ]
   },
@@ -77,16 +78,18 @@ const sites = [
     name: "CDAT A48",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
+        hasSubMenu: true
       }
     ]
   }
 ]
 
 export function NavigationMenu() {
+  const router = useRouter()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -101,7 +104,7 @@ export function NavigationMenu() {
               {site.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              {site.subItems.map((subItem) => (
+              {site.subItems.map((subItem) =>
                 subItem.hasSubMenu ? (
                   <DropdownMenuSub key={subItem.name}>
                     <DropdownMenuSubTrigger className="cursor-pointer">
@@ -110,7 +113,15 @@ export function NavigationMenu() {
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="min-w-[220px]">
                         {hvmOptions.map((option) => (
-                          <DropdownMenuItem key={option.name} className="cursor-pointer flex flex-col items-start">
+                          <DropdownMenuItem
+                            key={option.name}
+                            className="cursor-pointer flex flex-col items-start"
+                            onClick={() => {
+                              if (option.name === "HVM IMT") {
+                                router.push("/table")
+                              }
+                            }}
+                          >
                             <span className="font-medium">{option.name}</span>
                             <span className="text-sm text-gray-500 italic">{option.description}</span>
                           </DropdownMenuItem>
@@ -125,11 +136,11 @@ export function NavigationMenu() {
                     </a>
                   </DropdownMenuItem>
                 )
-              ))}
+              )}
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
   )
-} 
+}
