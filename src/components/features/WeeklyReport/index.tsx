@@ -1,5 +1,4 @@
-"use client"
-import { Input } from "@/components/ui/input";
+"use client";
 import {
   Table,
   TableBody,
@@ -9,7 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 
 interface TableData {
   priority: string;
@@ -23,23 +21,27 @@ interface TableData {
   mtdPeer: number | null;
   qtdA90: number | null;
   qtdPeer: number | null;
+  period: string;
   comment: string;
 }
 
-const HvmImtTable = () => {
+import { useState } from "react";
+
+const WeeklyClosureReport = () => {
   const [tableData, setTableData] = useState<TableData[]>([
     {
       priority: "1. OKR",
       platform: "CPU",
       product: "A",
       goal: 90,
-      wtdVol: "X0x",
+      wtdVol: "Xxx",
       wtdA90: 95,
       wtdPeer: 92,
       mtdA90: 95,
       mtdPeer: 92,
       qtdA90: 95,
       qtdPeer: 92,
+      period: "Week Month",
       comment: "",
     },
     {
@@ -47,78 +49,47 @@ const HvmImtTable = () => {
       platform: "SOC",
       product: "B",
       goal: 95,
-      wtdVol: "X0y",
+      wtdVol: "Yyy",
       wtdA90: 90,
       wtdPeer: 92,
       mtdA90: 90,
       mtdPeer: 92,
       qtdA90: 90,
       qtdPeer: 92,
+      period: "Week Month",
       comment: "",
     },
     {
-      priority: "2. IMTFocus",
+      priority: "2. IMT Focus",
       platform: "CPU",
       product: "C",
-      goal: 70,
-      wtdVol: "ZZ",
-      wtdA90: 80,
+      goal: 80,
+      wtdVol: "zzz",
+      wtdA90: 85,
       wtdPeer: 92,
       mtdA90: 85,
       mtdPeer: 92,
       qtdA90: 85,
       qtdPeer: 92,
-      comment: "",
-    },
-    {
-      priority: "2. IMTFocus",
-      platform: "SOC",
-      product: "D",
-      goal: null,
-      wtdVol: "",
-      wtdA90: null,
-      wtdPeer: null,
-      mtdA90: null,
-      mtdPeer: null,
-      qtdA90: null,
-      qtdPeer: null,
-      comment: "",
-    },
-    {
-      priority: "2. IMTFocus",
-      platform: "Mobile",
-      product: "E",
-      goal: null,
-      wtdVol: "",
-      wtdA90: null,
-      wtdPeer: null,
-      mtdA90: null,
-      mtdPeer: null,
-      qtdA90: null,
-      qtdPeer: null,
+      period: "Week Month",
       comment: "",
     },
   ]);
 
-  const getWtdMark = (data: TableData) => {
+  const getMark = (data: TableData) => {
     if (data.goal === null || data.wtdA90 === null || data.wtdPeer === null) {
       return { text: "", className: "" };
     }
 
+    // Healthy: Meet goal + benchmark
     if (data.wtdA90 >= data.goal && data.wtdA90 >= data.wtdPeer) {
-      return { text: "Healthy", className: "text-green-600 bg-green-50" };
+      return { text: "Healthy", className: "bg-green-50 text-green-700" };
     }
 
+    // Missing: Not meet goal
     if (data.wtdA90 < data.goal) {
-      return { text: "Missing", className: "text-red-600 bg-red-50" };
+      return { text: "Missing", className: "bg-red-50 text-red-700" };
     }
-
-    // if (data.wtdPeer - data.wtdA90 > 0.2 * data.goal) {
-    //   return {
-    //     text: "Not benchmark",
-    //     className: "text-yellow-600 bg-yellow-50",
-    //   };
-    // }
     if (data.wtdA90 >= data.goal && data.wtdA90 < data.wtdPeer) {
       // Check if the difference is greater than 20% of the goal
       const difference = data.wtdPeer - data.wtdA90;
@@ -140,11 +111,13 @@ const HvmImtTable = () => {
     if (value === null || goal === null) return "";
     return value >= goal ? "text-green-600" : "text-red-600";
   };
-  const [inputValue, setInputValue] = useState("");
+
   return (
-    <div className="container mx-auto p-9">
-      <h1 className="text-xl font-bold mb-4">HVM IMT</h1>
-      <div className="rounded-md border">
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">
+        Weekly/Monthly closure report (every Monday)
+      </h1>
+      <div className="rounded-md border overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="bg-gray-100 hover:bg-gray-100">
@@ -173,10 +146,13 @@ const HvmImtTable = () => {
                 QTD
               </TableHead>
               <TableHead rowSpan={2} className="border-r align-middle">
-                WTD Mark
+                Period
+              </TableHead>
+              <TableHead rowSpan={2} className="border-r align-middle">
+                Mark
               </TableHead>
               <TableHead rowSpan={2} className="align-middle">
-                WTD comment
+                Comment
               </TableHead>
             </TableRow>
             <TableRow className="bg-gray-100 hover:bg-gray-100">
@@ -190,57 +166,47 @@ const HvmImtTable = () => {
           </TableHeader>
           <TableBody>
             {tableData.map((row, index) => {
-              const wtdMark = getWtdMark(row);
+              const mark = getMark(row);
               return (
                 <TableRow key={index} className="hover:bg-gray-50">
                   <TableCell className="border-r">{row.priority}</TableCell>
                   <TableCell className="border-r">{row.platform}</TableCell>
                   <TableCell className="border-r">{row.product}</TableCell>
-                  <TableCell className="border-r">
-                    {row.goal !== null ? `${row.goal}%` : "-"}
-                  </TableCell>
-                  <TableCell className="border-r">
-                    {row.wtdVol || "-"}
-                  </TableCell>
+                  <TableCell className="border-r">{row.goal}%</TableCell>
+                  <TableCell className="border-r">{row.wtdVol}</TableCell>
                   <TableCell
                     className={cn(
                       "border-r",
                       getValueColor(row.wtdA90, row.goal)
                     )}
                   >
-                    {row.wtdA90 !== null ? `${row.wtdA90}%` : "-"}
+                    {row.wtdA90}%
                   </TableCell>
-                  <TableCell className="border-r">
-                    {row.wtdPeer !== null ? `${row.wtdPeer}%` : "-"}
-                  </TableCell>
+                  <TableCell className="border-r">{row.wtdPeer}%</TableCell>
                   <TableCell
                     className={cn(
                       "border-r",
                       getValueColor(row.mtdA90, row.goal)
                     )}
                   >
-                    {row.mtdA90 !== null ? `${row.mtdA90}%` : "-"}
+                    {row.mtdA90}%
                   </TableCell>
-                  <TableCell className="border-r">
-                    {row.mtdPeer !== null ? `${row.mtdPeer}%` : "-"}
-                  </TableCell>
+                  <TableCell className="border-r">{row.mtdPeer}%</TableCell>
                   <TableCell
                     className={cn(
                       "border-r",
                       getValueColor(row.qtdA90, row.goal)
                     )}
                   >
-                    {row.qtdA90 !== null ? `${row.qtdA90}%` : "-"}
+                    {row.qtdA90}%
                   </TableCell>
-                  <TableCell className="border-r">
-                    {row.qtdPeer !== null ? `${row.qtdPeer}%` : "-"}
-                  </TableCell>
+                  <TableCell className="border-r">{row.qtdPeer}%</TableCell>
+                  <TableCell className="border-r">{row.period}</TableCell>
                   <TableCell
-                    className={cn("border-r font-medium", wtdMark.className)}
+                    className={cn("border-r font-medium", mark.className)}
                   >
-                    {wtdMark.text || "-"}
+                    {mark.text}
                   </TableCell>
-                  {/* <TableCell>{row.comment || "-"}</TableCell> */}
                   <TableCell className="border-r">
                     <input
                       type="text"
@@ -260,34 +226,24 @@ const HvmImtTable = () => {
           </TableBody>
         </Table>
       </div>
-      <div className="mt-5 text-sm space-y-1">
-        <p>
-          <span className="inline-block w-4 h-4 bg-green-600 mr-2"></span>
-          Healthy: Meet goal + benchmark
-        </p>
-        <p>
-          <span className="inline-block w-4 h-4 bg-red-600 mr-2"></span>
-          Missing: Not meet goal
-        </p>
-        <p>
-          <span className="inline-block w-4 h-4 bg-yellow-600 mr-2"></span>
-          Not benchmark: Meet goal but Yield worst than peer &gt;20% Yield goal
-        </p>
-        <p>
-          <span className="inline-block w-4 h-4 bg-green-600 mr-2"></span>
-          Healthy: Meet goal + benchmark
-        </p>
-        <p>
-          <span className="inline-block w-4 h-4 bg-red-600 mr-2"></span>
-          Missing: Not meet goal
-        </p>
-        <p>
-          <span className="inline-block w-4 h-4 bg-yellow-600 mr-2"></span>
-          Not benchmark: Meet goal but Yield worst than peer &gt;20% Yield goal
-        </p>
+      <div className="mt-4 text-sm space-y-2">
+        <div className="flex items-center">
+          <div className="w-4 h-4 bg-green-600 mr-2 rounded-sm"></div>
+          <span>Healthy: Meet goal + benchmark</span>
+        </div>
+        <div className="flex items-center">
+          <div className="w-4 h-4 bg-red-600 mr-2 rounded-sm"></div>
+          <span>Missing: Not meet goal</span>
+        </div>
+        <div className="flex items-center">
+          <div className="w-4 h-4 bg-yellow-600 mr-2 rounded-sm"></div>
+          <span>
+            Not benchmark: Meet goal but worse than peer by &gt;20% of goal
+          </span>
+        </div>
       </div>
     </div>
   );
 };
 
-export default HvmImtTable;
+export default WeeklyClosureReport;

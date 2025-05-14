@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,24 +10,24 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuPortal,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const hvmOptions = [
   {
     name: "HVM IMT",
-    description: "refresh cadence: Daily"
+    description: "refresh cadence: Daily",
   },
   {
     name: "Weekly/Monthly",
-    description: "refresh cadence: Every Monday"
+    description: "refresh cadence: Every Monday",
   },
   {
     name: "Quarterly",
-    description: "refresh cadence: Every Monday of next quarter"
-  }
-]
+    description: "refresh cadence: Every Monday of next quarter",
+  },
+];
 
 const sites = [
   {
@@ -37,9 +37,9 @@ const sites = [
       {
         name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true
-      }
-    ]
+        hasSubMenu: true,
+      },
+    ],
   },
   {
     name: "PGAT A01",
@@ -48,9 +48,9 @@ const sites = [
       {
         name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true
-      }
-    ]
+        hasSubMenu: true,
+      },
+    ],
   },
   {
     name: "KuAT A15",
@@ -59,9 +59,9 @@ const sites = [
       {
         name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true
-      }
-    ]
+        hasSubMenu: true,
+      },
+    ],
   },
   {
     name: "CRAT A06",
@@ -70,9 +70,9 @@ const sites = [
       {
         name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true
-      }
-    ]
+        hasSubMenu: true,
+      },
+    ],
   },
   {
     name: "CDAT A48",
@@ -81,14 +81,14 @@ const sites = [
       {
         name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true
-      }
-    ]
-  }
-]
+        hasSubMenu: true,
+      },
+    ],
+  },
+];
 
 export function NavigationMenu() {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <DropdownMenu>
@@ -118,19 +118,30 @@ export function NavigationMenu() {
                             className="cursor-pointer flex flex-col items-start"
                             onClick={() => {
                               if (option.name === "HVM IMT") {
-                                router.push("/table")
+                                router.push("/daily_report");
+                              }
+                              if (option.name === "Weekly/Monthly") {
+                                router.push("/weekly_report");
+                              }
+                              if (option.name === "Quarterly") {
+                                router.push("/quarterly_report");
                               }
                             }}
                           >
                             <span className="font-medium">{option.name}</span>
-                            <span className="text-sm text-gray-500 italic">{option.description}</span>
+                            <span className="text-sm text-gray-500 italic">
+                              {option.description}
+                            </span>
                           </DropdownMenuItem>
                         ))}
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
                 ) : (
-                  <DropdownMenuItem key={subItem.name} className="cursor-pointer">
+                  <DropdownMenuItem
+                    key={subItem.name}
+                    className="cursor-pointer"
+                  >
                     <a href={subItem.href} className="w-full">
                       {subItem.name}
                     </a>
@@ -142,5 +153,5 @@ export function NavigationMenu() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
