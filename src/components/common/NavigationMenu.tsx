@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,83 +10,86 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuPortal,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const hvmOptions = [
   {
     name: "HVM IMT",
-    description: "refresh cadence: Daily"
+    description: "refresh cadence: Daily",
   },
   {
     name: "Weekly/Monthly",
-    description: "refresh cadence: Every Monday"
+    description: "refresh cadence: Every Monday",
   },
   {
     name: "Quarterly",
-    description: "refresh cadence: Every Monday of next quarter"
-  }
-]
+    description: "refresh cadence: Every Monday of next quarter",
+  },
+];
 
 const sites = [
   {
     name: "VNAT A90",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
-      }
-    ]
+        hasSubMenu: true,
+      },
+    ],
   },
   {
     name: "PGAT A01",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
-      }
-    ]
+        hasSubMenu: true,
+      },
+    ],
   },
   {
     name: "KuAT A15",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
-      }
-    ]
+        hasSubMenu: true,
+      },
+    ],
   },
   {
     name: "CRAT A06",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
-      }
-    ]
+        hasSubMenu: true,
+      },
+    ],
   },
   {
     name: "CDAT A48",
     subItems: [
       { name: "VNAT Mfg Yield DB", href: "#" },
-      { 
-        name: "VNAT HVM IMT Yield Report", 
+      {
+        name: "VNAT HVM IMT Yield Report",
         href: "#",
-        hasSubMenu: true 
-      }
-    ]
-  }
-]
+        hasSubMenu: true,
+      },
+    ],
+  },
+];
 
 export function NavigationMenu() {
+  const router = useRouter();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -101,7 +104,7 @@ export function NavigationMenu() {
               {site.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              {site.subItems.map((subItem) => (
+              {site.subItems.map((subItem) =>
                 subItem.hasSubMenu ? (
                   <DropdownMenuSub key={subItem.name}>
                     <DropdownMenuSubTrigger className="cursor-pointer">
@@ -110,26 +113,45 @@ export function NavigationMenu() {
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="min-w-[220px]">
                         {hvmOptions.map((option) => (
-                          <DropdownMenuItem key={option.name} className="cursor-pointer flex flex-col items-start">
+                          <DropdownMenuItem
+                            key={option.name}
+                            className="cursor-pointer flex flex-col items-start"
+                            onClick={() => {
+                              if (option.name === "HVM IMT") {
+                                router.push("/daily_report");
+                              }
+                              if (option.name === "Weekly/Monthly") {
+                                router.push("/weekly_report");
+                              }
+                              if (option.name === "Quarterly") {
+                                router.push("/quarterly_report");
+                              }
+                            }}
+                          >
                             <span className="font-medium">{option.name}</span>
-                            <span className="text-sm text-gray-500 italic">{option.description}</span>
+                            <span className="text-sm text-gray-500 italic">
+                              {option.description}
+                            </span>
                           </DropdownMenuItem>
                         ))}
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
                 ) : (
-                  <DropdownMenuItem key={subItem.name} className="cursor-pointer">
+                  <DropdownMenuItem
+                    key={subItem.name}
+                    className="cursor-pointer"
+                  >
                     <a href={subItem.href} className="w-full">
                       {subItem.name}
                     </a>
                   </DropdownMenuItem>
                 )
-              ))}
+              )}
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-} 
+  );
+}

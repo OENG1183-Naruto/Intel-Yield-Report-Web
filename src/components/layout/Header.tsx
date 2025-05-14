@@ -7,12 +7,12 @@ export const Header = () => {
     <>
       {/* Header Banner */}
       <div className="relative">
-        <div className="h-48 bg-[url('/banner-bg.svg')] bg-cover bg-center">
+        <div className="h-40 bg-[url('/banner-bg.svg')] bg-cover bg-center">
           <div className="absolute inset-0 bg-blue-900/30">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-6">
               <div className="flex justify-between items-center text-white">
-                <h1 className="text-4xl font-bold">ATM YIELD</h1>
-                <p className="text-2xl">STRONG TOGETHER CREATE FUTURE IDK THÊM CÁI BANNER VÔ</p>
+                <h1 className="text-3xl font-bold">ATM YIELD</h1>
+                <p className="text-xl">STRONG TOGETHER CREATE FUTURE IDK THÊM CÁI BANNER VÔ</p>
               </div>
             </div>
           </div>
@@ -22,12 +22,12 @@ export const Header = () => {
       {/* Navigation Bar */}
       <nav className="bg-cyan-500 text-white">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-12">
-            <div className="flex space-x-4">
-              <Button variant="ghost" className="text-white hover:bg-cyan-600">
+          <div className="flex justify-between items-center h-10">
+            <div className="flex space-x-2">
+              <Button variant="ghost" className="text-white hover:bg-cyan-600 text-sm">
                 HOME
               </Button>
-              <Button variant="ghost" className="text-white hover:bg-cyan-600">
+              <Button variant="ghost" className="text-white hover:bg-cyan-600 text-sm">
                 YIELD KNOWLEDGE ONE1STOP
               </Button>
               <NavigationMenu />
@@ -38,4 +38,4 @@ export const Header = () => {
       </nav>
     </>
   )
-} 
+}

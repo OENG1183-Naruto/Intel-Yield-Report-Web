@@ -1,3 +1,4 @@
+
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 
@@ -7,10 +8,12 @@ interface MainLayoutProps {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white mb-[50px]"> {/* Add padding-bottom equal to footer height */}
       <Header />
-      {children}
-      <Footer />
+      <div className="container mx-auto px-4">
+        {children}
+      </div>
+      <Footer /> {/* This stays fixed at bottom */}
     </main>
   )
-} 
+}
