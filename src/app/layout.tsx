@@ -8,6 +8,10 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Intel Yield Report",
   description: "Intel Yield Report Web Application",
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/favicon.ico'
+  }
 }
 
 export default function RootLayout({
