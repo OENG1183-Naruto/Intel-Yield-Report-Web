@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { NavigationMenu } from "@/src/components/common/NavigationMenu"
-import { DateTime } from "@/src/components/common/DateTime"
+import { NavigationMenu } from "@/components/common/NavigationMenu"
+import { DateTime } from "@/components/common/DateTime"
 
 export const Header = () => {
   return (

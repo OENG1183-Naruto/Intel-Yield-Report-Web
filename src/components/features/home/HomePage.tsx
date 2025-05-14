@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { MainLayout } from "@/src/layouts/MainLayout"
+import { MainLayout } from "@/components/layout/MainLayout"
 
 export const HomePage = () => {
   return (

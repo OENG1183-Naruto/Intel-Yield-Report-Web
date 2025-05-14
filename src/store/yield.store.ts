@@ -11,7 +11,6 @@ export const useYieldStore = create<YieldState>((set) => ({
   fetchData: async () => {
     set({ isLoading: true, error: null })
     try {
-      // Replace with your actual API call
       const response = await fetch('/api/yield-data')
       const data = await response.json()
       set({ data, isLoading: false })

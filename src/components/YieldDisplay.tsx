@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { useYieldStore } from '@/src/store/yieldStore'
+import { useYieldStore } from '@/store/yieldStore'
+import { YieldData } from '@/types/store'
 
 export const YieldDisplay = () => {
   const { data, isLoading, error, fetchData } = useYieldStore()
@@ -15,7 +16,7 @@ export const YieldDisplay = () => {
     <div>
       <h2>Yield Data</h2>
       <ul>
-        {data.map((item) => (
+        {data.map((item: YieldData) => (
           <li key={item.id}>
             {item.category}: {item.value}% ({new Date(item.timestamp).toLocaleDateString()})
           </li>

@@ -24,10 +24,25 @@
     ],
     "paths": {
       "@/*": [
-        "./*"
-      ],
-      "@/src/*": [
         "./src/*"
+      ],
+      "@/components/*": [
+        "./src/components/*"
+      ],
+      "@/lib/*": [
+        "./src/lib/*"
+      ],
+      "@/utils/*": [
+        "./src/utils/*"
+      ],
+      "@/styles/*": [
+        "./src/styles/*"
+      ],
+      "@/store/*": [
+        "./src/store/*"
+      ],
+      "@/types/*": [
+        "./src/types/*"
       ]
     }
   },
