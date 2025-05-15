@@ -248,6 +248,25 @@ const HvmImtTable = () => {
                       }}
                     />
                   </TableCell>
+                  {/* <TableCell className="border-r">
+                    <textarea
+                      className="border-none bg-transparent focus:outline-none w-full resize-none overflow-hidden"
+                      value={row.comment}
+                      placeholder="Manual key in"
+                      maxLength={1000}
+                      rows={1} // Start with a single row
+                      onInput={(e) => {
+                        const target = e.target as HTMLTextAreaElement;
+                        target.style.height = "auto"; // Reset height to calculate the new height
+                        target.style.height = `${target.scrollHeight}px`; // Set height based on content
+                      }}
+                      onChange={(e) => {
+                        const updatedTableData = [...tableData];
+                        updatedTableData[index].comment = e.target.value;
+                        setTableData(updatedTableData);
+                      }}
+                    />
+                  </TableCell> */}
                 </TableRow>
               );
             })}
