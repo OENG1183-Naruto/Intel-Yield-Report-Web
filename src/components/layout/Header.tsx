@@ -1,8 +1,13 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { NavigationMenu } from "@/components/common/NavigationMenu"
 import { DateTime } from "@/components/common/DateTime"
+import { useRouter } from "next/navigation"
 
 export const Header = () => {
+  const router = useRouter()
+
   return (
     <>
       {/* Header Banner */}
@@ -24,7 +29,11 @@ export const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-10">
             <div className="flex space-x-2">
-              <Button variant="ghost" className="text-white hover:bg-cyan-600 text-sm">
+              <Button 
+                variant="ghost" 
+                className="text-white hover:bg-cyan-600 text-sm"
+                onClick={() => router.push('/home')}
+              >
                 HOME
               </Button>
               <Button variant="ghost" className="text-white hover:bg-cyan-600 text-sm">
