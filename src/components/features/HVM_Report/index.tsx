@@ -62,7 +62,7 @@ const HvmImtTable = () => {
       product: "C",
       goal: 70,
       wtdVol: "ZZ",
-      wtdA90: 80,
+      wtdA90: 68,
       wtdPeer: 92,
       mtdA90: 85,
       mtdPeer: 92,
