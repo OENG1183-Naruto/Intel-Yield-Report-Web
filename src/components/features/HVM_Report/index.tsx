@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -33,14 +34,15 @@ const HvmImtTable = () => {
       platform: "CPU",
       product: "A",
       goal: 90,
-      wtdVol: "X0x",
-      wtdA90: 95,
-      wtdPeer: 92,
-      mtdA90: 95,
-      mtdPeer: 92,
-      qtdA90: 95,
-      qtdPeer: 92,
-      comment: "",
+      wtdVol: "10,000,000",
+      wtdA90: 95.01,
+      wtdPeer: 92.02,
+      mtdA90: 95.02,
+      mtdPeer: 92.31,
+      qtdA90: 95.31,
+      qtdPeer: 92.42,
+      comment:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
     },
     {
       priority: "1. OKR",
@@ -62,7 +64,7 @@ const HvmImtTable = () => {
       product: "C",
       goal: 70,
       wtdVol: "ZZ",
-      wtdA90: 68,
+      wtdA90: 76,
       wtdPeer: 92,
       mtdA90: 85,
       mtdPeer: 92,
@@ -114,7 +116,6 @@ const HvmImtTable = () => {
     }
 
     if (data.wtdA90 >= data.goal && data.wtdA90 < data.wtdPeer) {
-      // Check if the difference is greater than 20% of the goal
       const difference = data.wtdPeer - data.wtdA90;
       const threshold = 0.2 * data.goal;
       if (difference > threshold) {
@@ -134,52 +135,94 @@ const HvmImtTable = () => {
     if (value === null || goal === null) return "";
     return value >= goal ? "text-green-600" : "text-red-600";
   };
-  const [inputValue, setInputValue] = useState("");
+
   return (
     <div className="container mx-auto p-9">
       <h1 className="text-xl font-bold mb-4">HVM IMT</h1>
-      <div className="rounded-md border">
-        <Table>
+      <div className="rounded-lg overflow-hidden border border-gray-400">
+        <Table className="border-collapse w-full">
           <TableHeader>
-            <TableRow className="bg-gray-100 hover:bg-gray-100">
-              <TableHead rowSpan={2} className="border-r align-middle">
+            <TableRow>
+              <TableHead
+                rowSpan={2}
+                className="bg-[rgb(204,244,254)] border-b border-r border-gray-400 align-middle"
+              >
                 Priority
               </TableHead>
-              <TableHead rowSpan={2} className="border-r align-middle">
+              <TableHead
+                rowSpan={2}
+                className="bg-[rgb(204,244,254)] border-b border-r border-gray-400 align-middle"
+              >
                 Platform
               </TableHead>
-              <TableHead rowSpan={2} className="border-r align-middle">
+              <TableHead
+                rowSpan={2}
+                className="bg-[rgb(204,244,254)] border-b border-r border-gray-400 align-middle"
+              >
                 Product
               </TableHead>
-              <TableHead rowSpan={2} className="border-r align-middle">
+              <TableHead
+                rowSpan={2}
+                className="bg-[rgb(204,244,254)] border-b border-r border-gray-400 align-middle"
+              >
                 Goal
               </TableHead>
-              <TableHead rowSpan={2} className="border-r align-middle">
+              <TableHead
+                rowSpan={2}
+                className="bg-[rgb(204,244,254)] border-b border-r border-gray-400 align-middle"
+              >
                 WTD Vol
               </TableHead>
-              <TableHead colSpan={2} className="text-center border-b border-r">
+              <TableHead
+                colSpan={2}
+                className="bg-[rgb(204,244,254)] text-center border-b border-r border-gray-400"
+              >
                 WTD
               </TableHead>
-              <TableHead colSpan={2} className="text-center border-b border-r">
+              <TableHead
+                colSpan={2}
+                className="bg-[rgb(204,244,254)] text-center border-b border-r border-gray-400"
+              >
                 MTD
               </TableHead>
-              <TableHead colSpan={2} className="text-center border-b border-r">
+              <TableHead
+                colSpan={2}
+                className="bg-[rgb(204,244,254)] text-center border-b border-r border-gray-400"
+              >
                 QTD
               </TableHead>
-              <TableHead rowSpan={2} className="border-r align-middle">
+              <TableHead
+                rowSpan={2}
+                className="bg-[rgb(204,244,254)] border-b border-r border-gray-400 align-middle"
+              >
                 WTD Mark
               </TableHead>
-              <TableHead rowSpan={2} className="align-middle">
-                WTD comment
+              <TableHead
+                rowSpan={2}
+                className="bg-[rgb(204,244,254)] border-b border-gray-400 align-middle"
+              >
+                WTD Comment
               </TableHead>
             </TableRow>
-            <TableRow className="bg-gray-100 hover:bg-gray-100">
-              <TableHead className="border-r">A90</TableHead>
-              <TableHead className="border-r">Peer</TableHead>
-              <TableHead className="border-r">A90</TableHead>
-              <TableHead className="border-r">Peer</TableHead>
-              <TableHead className="border-r">A90</TableHead>
-              <TableHead className="border-r">Peer</TableHead>
+            <TableRow>
+              <TableHead className="bg-[rgb(204,244,254)] border-b border-r border-gray-400">
+                A90
+              </TableHead>
+              <TableHead className="bg-[rgb(204,244,254)] border-b border-r border-gray-400">
+                Peer
+              </TableHead>
+              <TableHead className="bg-[rgb(204,244,254)] border-b border-r border-gray-400">
+                A90
+              </TableHead>
+              <TableHead className="bg-[rgb(204,244,254)] border-b border-r border-gray-400">
+                Peer
+              </TableHead>
+              <TableHead className="bg-[rgb(204,244,254)] border-b border-r border-gray-400">
+                A90
+              </TableHead>
+              <TableHead className="bg-[rgb(204,244,254)] border-b border-r border-gray-400">
+                Peer
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -187,65 +230,89 @@ const HvmImtTable = () => {
               const wtdMark = getWtdMark(row);
               return (
                 <TableRow key={index} className="hover:bg-gray-50">
-                  <TableCell className="border-r">{row.priority}</TableCell>
-                  <TableCell className="border-r">{row.platform}</TableCell>
-                  <TableCell className="border-r">{row.product}</TableCell>
-                  <TableCell className="border-r">
+                  <TableCell className="border-t border-r border-gray-400">
+                    {row.priority}
+                  </TableCell>
+                  <TableCell className="border-t border-r border-gray-400">
+                    {row.platform}
+                  </TableCell>
+                  <TableCell className="border-t border-r border-gray-400">
+                    {row.product}
+                  </TableCell>
+                  <TableCell className="border-t border-r border-gray-400">
                     {row.goal !== null ? `${row.goal}%` : "-"}
                   </TableCell>
-                  <TableCell className="border-r">
+                  <TableCell className="border-t border-r border-gray-400">
                     {row.wtdVol || "-"}
                   </TableCell>
                   <TableCell
                     className={cn(
-                      "border-r",
+                      "border-t border-r border-gray-400",
                       getValueColor(row.wtdA90, row.goal)
                     )}
                   >
                     {row.wtdA90 !== null ? `${row.wtdA90}%` : "-"}
                   </TableCell>
-                  <TableCell className="border-r">
-                    {row.wtdPeer !== null ? `${row.wtdPeer}%` : "-"}
-                  </TableCell>
                   <TableCell
                     className={cn(
-                      "border-r",
+                      "border-t border-r border-gray-400",
+                      getValueColor(row.wtdPeer, row.goal)
+                    )}
+                  >
+                    {row.wtdPeer !== null ? `${row.wtdPeer}%` : "-"}
+                  </TableCell>
+
+                  <TableCell
+                    className={cn(
+                      "border-t border-r border-gray-400",
                       getValueColor(row.mtdA90, row.goal)
                     )}
                   >
                     {row.mtdA90 !== null ? `${row.mtdA90}%` : "-"}
                   </TableCell>
-                  <TableCell className="border-r">
+                  <TableCell
+                    className={cn(
+                      "border-t border-r border-gray-400",
+                      getValueColor(row.mtdPeer, row.goal)
+                    )}
+                  >
                     {row.mtdPeer !== null ? `${row.mtdPeer}%` : "-"}
                   </TableCell>
                   <TableCell
                     className={cn(
-                      "border-r",
+                      "border-t border-r border-gray-400",
                       getValueColor(row.qtdA90, row.goal)
                     )}
                   >
                     {row.qtdA90 !== null ? `${row.qtdA90}%` : "-"}
                   </TableCell>
-                  <TableCell className="border-r">
+                  <TableCell
+                    className={cn(
+                      "border-t border-r border-gray-400",
+                      getValueColor(row.qtdPeer, row.goal)
+                    )}
+                  >
                     {row.qtdPeer !== null ? `${row.qtdPeer}%` : "-"}
                   </TableCell>
                   <TableCell
-                    className={cn("border-r font-medium", wtdMark.className)}
+                    className={cn(
+                      "border-t border-r border-gray-400 font-medium",
+                      wtdMark.className
+                    )}
                   >
                     {wtdMark.text || "-"}
                   </TableCell>
-                  {/* <TableCell>{row.comment || "-"}</TableCell> */}
-                  <TableCell className="border-r">
-                    <input
-                      type="text"
-                      className="border-none bg-transparent focus:outline-none w-full"
+                  <TableCell className="border-t border-gray-400 align-top">
+                    <Textarea
+                      className="border-none border-0 bg-transparent focus:outline-none w-full"
                       value={row.comment}
-                      placeholder="Manual key in"
+                      placeholder="Add comment..."
                       onChange={(e) => {
                         const updatedTableData = [...tableData];
                         updatedTableData[index].comment = e.target.value;
                         setTableData(updatedTableData);
                       }}
+                      maxLength={1000}
                     />
                   </TableCell>
                 </TableRow>
@@ -254,6 +321,7 @@ const HvmImtTable = () => {
           </TableBody>
         </Table>
       </div>
+
       <div className="mt-5 text-sm space-y-1">
         <p>
           <span className="inline-block w-4 h-4 bg-green-600 mr-2"></span>
