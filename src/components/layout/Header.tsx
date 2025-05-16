@@ -10,16 +10,24 @@ export const Header = () => {
 
   return (
     <>
-      {/* Header Banner */}
-      <div className="relative">
-        <div className="h-40 bg-[url('/banner-bg.svg')] bg-cover bg-center">
-          <div className="absolute inset-0 bg-blue-900/30">
-            <div className="container mx-auto px-4 py-6">
-              <div className="flex justify-between items-center text-white">
-                <h1 className="text-3xl font-bold">ATM YIELD</h1>
-                <p className="text-xl">STRONG TOGETHER CREATE FUTURE IDK THÊM CÁI BANNER VÔ</p>
-              </div>
-            </div>
+      {/* Banner Section */}
+      <div className="relative w-full h-40 bg-cover bg-center">
+        {/* Banner Image */}
+        <img
+          src="/Intel_Banner.png"
+          alt="Intel Banner"
+          className="w-full h-full object-cover"
+        />
+
+        {/* Light-to-Dark Gradient Overlay + Text */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-black/40 px-4 sm:px-6 flex items-center justify-end">
+          <div className="text-white text-right">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+              ATM YIELD
+            </h1>
+            <p className="text-sm sm:text-base md:text-xl">
+              STRONG TOGETHER CREATE FUTURE
+            </p>
           </div>
         </div>
       </div>
@@ -27,7 +35,7 @@ export const Header = () => {
       {/* Navigation Bar */}
       <nav className="bg-cyan-500 text-white">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-10">
+          <div className="flex justify-between  items-center h-10">
             <div className="flex space-x-2">
               <Button 
                 variant="ghost" 
@@ -36,7 +44,10 @@ export const Header = () => {
               >
                 HOME
               </Button>
-              <Button variant="ghost" className="text-white hover:bg-cyan-600 text-sm">
+              <Button
+                variant="ghost"
+                className="text-white hover:bg-cyan-600 text-sm"
+              >
                 YIELD KNOWLEDGE ONE1STOP
               </Button>
               <NavigationMenu />
@@ -46,5 +57,5 @@ export const Header = () => {
         </div>
       </nav>
     </>
-  )
-}
+  );
+};
