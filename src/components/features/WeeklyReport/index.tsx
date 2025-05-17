@@ -139,14 +139,17 @@ const WeeklyClosureReport = () => {
               <TableHead colSpan={2} className="text-center border-b border-r">
                 WTD
               </TableHead>
+              <TableHead rowSpan={2} className="border-r align-middle">
+                Mark
+              </TableHead>
               <TableHead colSpan={2} className="text-center border-b border-r">
                 MTD
               </TableHead>
+              <TableHead rowSpan={2} className="border-r align-middle">
+                Mark
+              </TableHead>
               <TableHead colSpan={2} className="text-center border-b border-r">
                 QTD
-              </TableHead>
-              <TableHead rowSpan={2} className="border-r align-middle">
-                Period
               </TableHead>
               <TableHead rowSpan={2} className="border-r align-middle">
                 Mark
@@ -184,6 +187,11 @@ const WeeklyClosureReport = () => {
                   </TableCell>
                   <TableCell className="border-r">{row.wtdPeer}%</TableCell>
                   <TableCell
+                    className={cn("border-r font-medium", mark.className)}
+                  >
+                    {mark.text}
+                  </TableCell>
+                  <TableCell
                     className={cn(
                       "border-r",
                       getValueColor(row.mtdA90, row.goal)
@@ -191,7 +199,13 @@ const WeeklyClosureReport = () => {
                   >
                     {row.mtdA90}%
                   </TableCell>
+
                   <TableCell className="border-r">{row.mtdPeer}%</TableCell>
+                  <TableCell
+                    className={cn("border-r font-medium", mark.className)}
+                  >
+                    {mark.text}
+                  </TableCell>
                   <TableCell
                     className={cn(
                       "border-r",
@@ -201,7 +215,7 @@ const WeeklyClosureReport = () => {
                     {row.qtdA90}%
                   </TableCell>
                   <TableCell className="border-r">{row.qtdPeer}%</TableCell>
-                  <TableCell className="border-r">{row.period}</TableCell>
+
                   <TableCell
                     className={cn("border-r font-medium", mark.className)}
                   >
