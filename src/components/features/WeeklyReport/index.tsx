@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface TableData {
   priority: string;
@@ -24,8 +25,6 @@ interface TableData {
   period: string;
   comment: string;
 }
-
-import { useState } from "react";
 
 const WeeklyClosureReport = () => {
   const [tableData, setTableData] = useState<TableData[]>([
@@ -81,17 +80,15 @@ const WeeklyClosureReport = () => {
       return { text: "", className: "" };
     }
 
-    // Healthy: Meet goal + benchmark
     if (data.wtdA90 >= data.goal && data.wtdA90 >= data.wtdPeer) {
       return { text: "Healthy", className: "bg-green-50 text-green-700" };
     }
 
-    // Missing: Not meet goal
     if (data.wtdA90 < data.goal) {
       return { text: "Missing", className: "bg-red-50 text-red-700" };
     }
+
     if (data.wtdA90 >= data.goal && data.wtdA90 < data.wtdPeer) {
-      // Check if the difference is greater than 20% of the goal
       const difference = data.wtdPeer - data.wtdA90;
       const threshold = 0.2 * data.goal;
       if (difference > threshold) {
@@ -111,6 +108,12 @@ const WeeklyClosureReport = () => {
     if (value === null || goal === null) return "";
     return value >= goal ? "text-green-600" : "text-red-600";
   };
+
+  const groupedData = tableData.reduce((acc, row) => {
+    if (!acc[row.priority]) acc[row.priority] = [];
+    acc[row.priority].push(row);
+    return acc;
+  }, {} as Record<string, TableData[]>);
 
   return (
     <div className="p-4">
@@ -168,75 +171,105 @@ const WeeklyClosureReport = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tableData.map((row, index) => {
-              const mark = getMark(row);
-              return (
-                <TableRow key={index} className="hover:bg-gray-50">
-                  <TableCell className="border-r">{row.priority}</TableCell>
-                  <TableCell className="border-r">{row.platform}</TableCell>
-                  <TableCell className="border-r">{row.product}</TableCell>
-                  <TableCell className="border-r">{row.goal}%</TableCell>
-                  <TableCell className="border-r">{row.wtdVol}</TableCell>
-                  <TableCell
-                    className={cn(
-                      "border-r",
-                      getValueColor(row.wtdA90, row.goal)
+            {Object.entries(groupedData).map(([priority, rows]) =>
+              rows.map((row, index) => {
+                const mark = getMark(row);
+                return (
+                  <TableRow key={`${priority}-${index}`} className="hover:bg-gray-50">
+                    {index === 0 && (
+                      <TableCell
+                        className="border-r font-medium align-top"
+                        rowSpan={rows.length}
+                      >
+                        {priority}
+                      </TableCell>
                     )}
-                  >
-                    {row.wtdA90}%
-                  </TableCell>
-                  <TableCell className="border-r">{row.wtdPeer}%</TableCell>
-                  <TableCell
-                    className={cn("border-r font-medium", mark.className)}
-                  >
-                    {mark.text}
-                  </TableCell>
-                  <TableCell
-                    className={cn(
-                      "border-r",
-                      getValueColor(row.mtdA90, row.goal)
-                    )}
-                  >
-                    {row.mtdA90}%
-                  </TableCell>
-
-                  <TableCell className="border-r">{row.mtdPeer}%</TableCell>
-                  <TableCell
-                    className={cn("border-r font-medium", mark.className)}
-                  >
-                    {mark.text}
-                  </TableCell>
-                  <TableCell
-                    className={cn(
-                      "border-r",
-                      getValueColor(row.qtdA90, row.goal)
-                    )}
-                  >
-                    {row.qtdA90}%
-                  </TableCell>
-                  <TableCell className="border-r">{row.qtdPeer}%</TableCell>
-
-                  <TableCell
-                    className={cn("border-r font-medium", mark.className)}
-                  >
-                    {mark.text}
-                  </TableCell>
-                  <TableCell className="border-r">
-                    <input
-                      type="text"
-                      className="border-none bg-transparent focus:outline-none w-full"
-                      value={row.comment}
-                      placeholder="Manual key in"
-                      onChange={(e) => {
-                        const updatedTableData = [...tableData];
-                        updatedTableData[index].comment = e.target.value;
-                        setTableData(updatedTableData);
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                    <TableCell className="border-r">{row.platform}</TableCell>
+                    <TableCell className="border-r">{row.product}</TableCell>
+                    <TableCell className="border-r">{row.goal}%</TableCell>
+                    <TableCell className="border-r">{row.wtdVol}</TableCell>
+                    <TableCell
+                      className={cn(
+                        "border-r",
+                        getValueColor(row.wtdA90, row.goal)
+                      )}
+                    >
+                      {row.wtdA90}%
+                    </TableCell>
+                    <TableCell
+                      className={cn(
+                        "border-r",
+                        getValueColor(row.wtdPeer, row.goal)
+                      )}
+                    >
+                      {row.wtdPeer}%
+                    </TableCell>
+                    <TableCell
+                      className={cn("border-r font-medium", mark.className)}
+                    >
+                      {mark.text}
+                    </TableCell>
+                    <TableCell
+                      className={cn(
+                        "border-r",
+                        getValueColor(row.mtdA90, row.goal)
+                      )}
+                    >
+                      {row.mtdA90}%
+                    </TableCell>
+                    <TableCell
+                      className={cn(
+                        "border-r",
+                        getValueColor(row.mtdPeer, row.goal)
+                      )}
+                    >
+                      {row.mtdPeer}%
+                    </TableCell>
+                    <TableCell
+                      className={cn("border-r font-medium", mark.className)}
+                    >
+                      {mark.text}
+                    </TableCell>
+                    <TableCell
+                      className={cn(
+                        "border-r",
+                        getValueColor(row.qtdA90, row.goal)
+                      )}
+                    >
+                      {row.qtdA90}%
+                    </TableCell>
+                    <TableCell
+                      className={cn(
+                        "border-r",
+                        getValueColor(row.qtdPeer, row.goal)
+                      )}
+                    >
+                      {row.qtdPeer}%
+                    </TableCell>
+                    <TableCell
+                      className={cn("border-r font-medium", mark.className)}
+                    >
+                      {mark.text}
+                    </TableCell>
+                    <TableCell className="border-r">
+                      <input
+                        type="text"
+                        className="border-none bg-transparent focus:outline-none w-full"
+                        value={row.comment}
+                        placeholder="Manual key in"
+                        onChange={(e) => {
+                          const updatedTableData = [...tableData];
+                          updatedTableData[
+                            tableData.indexOf(row)
+                          ].comment = e.target.value;
+                          setTableData(updatedTableData);
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            )}
           </TableBody>
         </Table>
       </div>
